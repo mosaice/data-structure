@@ -1,0 +1,34 @@
+var List = require('./');
+
+var list = new List(1, 2, 3);
+
+console.log(list.toString());
+console.log(list.length());
+console.log(list.curPos());
+console.log(list.getElement());
+list.insert({a: 'haha'});
+console.log(list.toString());
+console.log(list.curPos());
+console.log(list.getElement());
+list.append(true);
+console.log(list.toString());
+console.log(list.find({a: 'haha'}));
+console.log(list.find(true));
+console.log(list.remove(1));
+console.log(list.toString());
+list.front();
+console.log(list.curPos());
+list.end();
+console.log(list.curPos());
+list.prev();
+console.log(list.curPos());
+list.next();
+list.next();
+console.log(list.curPos());
+list.prev();
+list.prev();
+list.prev();
+list.prev();
+console.log(list.curPos());
+list.moveTo(4);
+console.log(list.curPos());

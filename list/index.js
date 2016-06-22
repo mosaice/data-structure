@@ -1,4 +1,4 @@
-var diffObject = require('../lib');
+var diffObject = require('../lib/diffObject');
 
 function List() {
   var dataSource = [];
@@ -6,9 +6,8 @@ function List() {
 
   if (arguments.length > 0) {
     [].forEach.call(arguments, function (v, i) {
-      this.dataSource[i] = v;
+      dataSource[i] = v;
     });
-    this.length = arguments.length;
   }
 
   this.clear = function () {
@@ -24,7 +23,7 @@ function List() {
   };
 
   this.toString = function () {
-    return dataSource.toString();
+    return JSON.stringify(dataSource);
   };
 
   this.getElement = function () {
@@ -43,7 +42,7 @@ function List() {
 
   this.find = function (elem) {
     var i;
-    for (i = 0; i < this.length; i++) {
+    for (i = 0; i < this.length(); i++) {
       if (typeof elem === 'object' && typeof dataSource[i] === 'object' && diffObject(elem, dataSource[i])) return i;
       if (isNaN(elem) && isNaN(dataSource[i])) return i;
       if (dataSource[i] === elem) return i;
@@ -55,6 +54,9 @@ function List() {
     var _pos = this.find(elem);
     if (~_pos) {
       dataSource.splice(_pos, 1);
+      if (pos > this.length - 1) {
+        pos = this.length - 1;
+      }
       return true;
     }
     return false;
@@ -65,7 +67,7 @@ function List() {
   };
 
   this.end = function () {
-    pos = this.length();
+    pos = this.length() - 1 ;
   };
 
   this.prev = function () {
@@ -92,3 +94,5 @@ function List() {
     return false;
   };
 }
+
+module.exports = List;
