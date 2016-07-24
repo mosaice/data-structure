@@ -40,17 +40,17 @@ function radix(numArr) {
 // -------------- test ---------
 
 var testArr = [];
-for (var i = 0; i < 50; i++) {
-  testArr.push(Math.floor(Math.random() * 2000));
+for (var i = 0; i < 100000; i++) {
+  testArr.push(Math.floor(Math.random() * 400000));
 }
 
 console.log('before sort\n');
 var startTime = Date.now();
 console.log('start at' + startTime + '\n');
-console.log(testArr.toString());
+// console.log(testArr.toString());
 console.log('after sort\n');
-// radix(testArr);
-console.log(radix(testArr).toString());
+radix(testArr);
+// console.log(radix(testArr).toString());
 console.log('\n');
 var endTime = Date.now();
 console.log('start at' + endTime);
