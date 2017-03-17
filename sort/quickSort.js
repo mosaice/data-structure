@@ -11,7 +11,7 @@ function quickSort(arr) {
       left.push(arr[i]);
     }
   }
-  return quickSort(left).concat([pivot]).concat(right);
+  return quickSort(left).concat([pivot]).concat(quickSort(right));
 
 }
 
