@@ -22,17 +22,17 @@ typedef struct{
     int length;
 } LinkList;
 
-/* 初始化线性表L */
+/* 初始化链表L */
 Status InitList(LinkList *L);
-/* 判断线性表L是否为空 */
+/* 判断链表L是否为空 */
 Status ListEmpty(LinkList L);
-/* 获取第一个个节点的值 */
+/* 获取第一个节点的值 */
 Status FirstElem(LinkList L, ElemType *e);
-/* 获取最后一个个节点的值 */
+/* 获取最后一个节点的值 */
 Status LastElem(LinkList L,ElemType *e);
-/* 求线性表长度 */
+/* 求链表长度 */
 int ListLength(LinkList L);
-/* 销毁线性表 */
+/* 销毁链表 */
 Status DestroyList(LinkList *L);
 /* 获取某个元素 */
 Status GetElem(LinkList L, int i, ElemType *e);
@@ -40,16 +40,16 @@ Status GetElem(LinkList L, int i, ElemType *e);
 Status ListInsert(LinkList *L, int i, ElemType e);
 // /* 删除元素 */
 Status ListDelete(LinkList *L, int i, ElemType *e);
-/* 正序遍历线性表 */
+/* 正序遍历链表 */
 void LsitTraverse(LinkList L, void (* fun)(ElemType, int));
-/* 逆序遍历线性表 */
+/* 逆序遍历链表 */
 void LsitReverseTraverse(LinkList L, void (* fun)(ElemType, int));
 /* 获取位置 */
 int LocateElem(LinkList L, ElemType e);
 /* 获取前驱元素 */
 Status PriorElem(LinkList L, ElemType cur_e, ElemType *pre_e);
 /* 获取后继元素 */
-// Status NextElem(LinkList L, ElemType cur_e, ElemType *next_e);
+Status NextElem(LinkList L, ElemType cur_e, ElemType *next_e);
 
 Status InitList(LinkList *L)
 {
