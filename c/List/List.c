@@ -68,6 +68,7 @@ int main(int argc, char *argv[]) {
   printf("99的位置为： %d\n", pos);
 
   
+  printf("\n测试 PriorElem 测试值： %d %s\n", 3, status(PriorElem(*L, 3, &e)));
   printf("\n测试 PriorElem 测试值： %d %s\n", 99, status(PriorElem(*L, 99, &e)));
   printf("取得结果为: %d\n", e);
 
