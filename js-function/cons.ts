@@ -1,16 +1,16 @@
 export module Cons {
-  type InputType = number | string | undefined | null | Symbol | Store;
+  export type InputType = number | string | undefined | null | Symbol | Store;
   type GetAction = "car" | "cdr";
   type SetAction = "setCar" | "setCdr";
   type Action = GetAction | SetAction;
   type StoreSetFunc<T = InputType> = (input: T) => T;
   type GetDispatch = (action: GetAction) => InputType;
   type SetDispatch = (action: SetAction) => StoreSetFunc;
-  type Store = GetDispatch & SetDispatch;
+  export type Store = GetDispatch & SetDispatch;
 
   type Cons = (x: InputType, y: InputType) => Store;
-  type GetFunc = (store: GetDispatch & SetDispatch) => InputType;
-  type SetFunc<T = InputType> = (
+  export type GetFunc = (store: GetDispatch & SetDispatch) => InputType;
+  export type SetFunc<T = InputType> = (
     store: GetDispatch & SetDispatch,
     value: T
   ) => T;
