@@ -1,41 +1,46 @@
-type Store = Dispatch;
-type InputType = number | string | undefined | null | Symbol | Store;
-type Action = 'car' | 'cdr' | 'setCar' | 'setCdr';
-type StoreSetFunc<T = InputType> = (input: T) => T;
-type Dispatch = (action: Action) => InputType | StoreSetFunc;
-
-type Cons = (x: InputType, y: InputType) => Dispatch;
-type GetFunc = (store: Store) => InputType;
-type SetFunc<T = InputType> = (store: Store, value: T) => T;
-
 export module Cons {
+  type InputType = number | string | undefined | null | Symbol | Store;
+  type GetAction = "car" | "cdr";
+  type SetAction = "setCar" | "setCdr";
+  type Action = GetAction | SetAction;
+  type StoreSetFunc<T = InputType> = (input: T) => T;
+  type GetDispatch = (action: GetAction) => InputType;
+  type SetDispatch = (action: SetAction) => StoreSetFunc;
+  type Store = GetDispatch & SetDispatch;
+
+  type Cons = (x: InputType, y: InputType) => Store;
+  type GetFunc = (store: GetDispatch & SetDispatch) => InputType;
+  type SetFunc<T = InputType> = (
+    store: GetDispatch & SetDispatch,
+    value: T
+  ) => T;
 
   export const cons: Cons = (x, y) => {
-    const setX: StoreSetFunc = v => x = v;
-    const setY: StoreSetFunc = v => y = v;
+    const setX: StoreSetFunc = v => (x = v);
+    const setY: StoreSetFunc = v => (y = v);
 
-    const dispatch: Dispatch = action => {
+    const dispatch = (action: Action) => {
       switch (action) {
-        case 'car':
+        case "car":
           return x;
-        case 'cdr':
+        case "cdr":
           return y;
-        case 'setCar':
+        case "setCar":
           return setX;
-        case 'setCdr':
+        case "setCdr":
           return setY;
         default:
-          throw new Error('unknown action!');
+          throw new Error("unknown action!");
       }
-    }
+    };
 
-    return dispatch;
-  }
+    return dispatch as Store;
+  };
 
-  export const car:GetFunc = (store) => store('car') as InputType;
-  export const cdr:GetFunc = (store) => store('cdr') as InputType;
-  export const setCar:SetFunc = (store, value) => (store('setCar') as StoreSetFunc)(value);
-  export const setCdr:SetFunc = (store, value) => (store('setCdr') as StoreSetFunc)(value);
+  export const car: GetFunc = store => store("car");
+  export const cdr: GetFunc = store => store("cdr");
+  export const setCar: SetFunc = (store, value) => store("setCar")(value);
+  export const setCdr: SetFunc = (store, value) => store("setCdr")(value);
 }
 
 /**
@@ -43,18 +48,12 @@ export module Cons {
  * test command run `ts-node cons.ts`
  */
 
-// const store = Cons.cons('first', 'second');
+// const store = Cons.cons("first", "second");
 // console.log(`car value is ${Cons.car(store)}`);
 // console.log(`cdr value is ${Cons.cdr(store)}`);
 
 // Cons.setCar(store, 1);
-// Cons.setCdr(store, Symbol('oh yeah'));
-// console.log('after change');
+// Cons.setCdr(store, Symbol("oh yeah"));
+// console.log("after change");
 // console.log(`car value is ${Cons.car(store)}`);
 // console.log(`cdr value is ${(Cons.cdr(store) as Symbol).toString()}`);
-
-
-
-
-
-
