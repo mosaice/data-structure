@@ -1,8 +1,7 @@
-import { Queue } from "./queue";
-import { Cons } from "./cons";
+import { Cons } from './cons';
 
 export module ArrayLike {
-  type ArrayLike = Queue.Q;
+  type ArrayLike = Cons.Store;
   type Init = (length?: number) => void;
   type Make = (length?: number) => ArrayLike;
   type Lenth = (arr: ArrayLike) => number;
@@ -22,20 +21,45 @@ export module ArrayLike {
   export const init = (len?: number) => {
     let _length = len || 0;
 
-    const q = Queue.init();
+    const _arr = Cons.cons(null, null);
+    const _firstPtr = () => Cons.car(_arr);
+    const _lastPtr = () => Cons.cdr(_arr);
 
-    if (len) {
-      while (len-- > 0) {
-        Queue.enQueue(q, Cons.cons(null, null));
-      }
-    }
+    const isEmpty = () => _firstPtr() === null;
 
-    const _getPtr = (ptr, i) => {
-      if (ptr === null) {
+    const _getPtr = i => {
+      if (isEmpty()) {
         return null;
       }
-      return i === 0 ? ptr : _getPtr(Cons.cdr(ptr), i - 1);
+      const _goToPrt = (ptr, index) => {
+        if (ptr === null) {
+          return null;
+        }
+
+        return index === 0 ? ptr : _goToPrt(Cons.cdr(ptr), index - 1);
+      };
+
+      return _goToPrt(_firstPtr(), i);
     };
+
+    const _insert = value => {
+      const pair = Cons.cons(value, null);
+
+      if (isEmpty()) {
+        Cons.setCar(_arr, pair);
+        Cons.setCdr(_arr, pair);
+      } else {
+        Cons.setCdr(_lastPtr(), pair);
+        Cons.setCdr(_arr, pair);
+      }
+      return value;
+    };
+
+    if (len) {
+      // while (len-- > 0) {
+      //   Queue.enQueue(q, Cons.cons(null, null));
+      // }
+    }
 
     const length = () => _length;
 
@@ -46,7 +70,7 @@ export module ArrayLike {
 
     const pop = () => {
       if (Queue.isEmpty(q)) {
-        throw new Error("array is empty!");
+        throw new Error('array is empty!');
       }
       --_length;
       return Queue.deQueue(q);
@@ -69,22 +93,27 @@ export module ArrayLike {
 
     const setValue = (index, value) => {
       if (index < 0) {
-        throw new Error("range error");
+        throw new Error('range error');
+      }
+
+      if (index >= _length) {
+        let emptyNum = index + 1 - _length;
+        while (emptyNum-- > 0) {}
       }
     };
 
     const dispatch = (action: string) => {
       switch (action) {
-        case "length":
+        case 'length':
           return length;
-        case "cdr":
+        case 'cdr':
           return y;
-        case "setCar":
+        case 'setCar':
           return setX;
-        case "setCdr":
+        case 'setCdr':
           return setY;
         default:
-          throw new Error("unknown action!");
+          throw new Error('unknown action!');
       }
     };
 
