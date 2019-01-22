@@ -45,3 +45,17 @@ export module Stack {
     }
   };
 }
+
+/**
+ * test
+ * test command run `ts-node stack.ts`
+ */
+// const s = Stack.init();
+// console.log(`stack is empty ? : ${Stack.isEmpty(s) ? "yes!" : "no!"}`);
+// Stack.push(s, "first");
+// Stack.push(s, "second");
+// Stack.push(s, 3);
+// console.log(`stack top is ${Stack.top(s)}`);
+// console.log(`stack pop value = ${Stack.pop(s)}`);
+// console.log(`stack top is ${Stack.top(s)}`);
+// console.log(`stack is empty ? : ${Stack.isEmpty(s) ? "yes!" : "no!"}`);
