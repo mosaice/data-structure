@@ -1,3 +1,9 @@
+const swap = (arr, a, b) => {
+  const temp = arr[a];
+  arr[a] = arr[b];
+  arr[b] = temp;
+}
+
 const partition = (arr, low, hi) => {
   const pivot = arr[low];
   while (low < hi) {
@@ -19,10 +25,21 @@ const partition = (arr, low, hi) => {
   // 由原理部分可以很清楚的知道low位置的值并不是pivot,所以需要将pivot赋值给arr[low]
   arr[low] = pivot;
   return low; // 返回pivot的正确位置
+
+}
+
+const partition1 = (arr, low, hi) => {
+  const pivot = arr[low];
+  for (let k = low + 1; k <= hi; k++) {
+    if (arr[k] <= pivot) {
+      swap(arr, ++mi, k);
+    }
+  }
+  swap(arr, lo, mi);
+  return mi;
 }
 
 const quickSort = (arr, low = 0, hi = arr.length - 1) => {
-  console.log(low ,hi)
   if (hi - low < 2) return;
   const mi = partition(arr,low, hi);
   quickSort(arr, low, mi);
