@@ -1,7 +1,5 @@
 const swap = (arr, a, b) => {
-  const temp = arr[a];
-  arr[a] = arr[b];
-  arr[b] = temp;
+  [arr[a], arr[b]] = [arr[b], arr[a]]
 }
 
 const partition = (arr, low, hi) => {
@@ -29,19 +27,21 @@ const partition = (arr, low, hi) => {
 }
 
 const partition1 = (arr, low, hi) => {
+  swap(arr, low, low + ~~(Math.random() * (hi - low)))
   const pivot = arr[low];
+  let mi = low;
   for (let k = low + 1; k <= hi; k++) {
     if (arr[k] <= pivot) {
       swap(arr, ++mi, k);
     }
   }
-  swap(arr, lo, mi);
+  swap(arr, low, mi);
   return mi;
 }
 
 const quickSort = (arr, low = 0, hi = arr.length - 1) => {
   if (hi - low < 2) return;
-  const mi = partition(arr,low, hi);
+  const mi = partition1(arr,low, hi);
   quickSort(arr, low, mi);
   quickSort(arr, mi + 1, hi);
 }
